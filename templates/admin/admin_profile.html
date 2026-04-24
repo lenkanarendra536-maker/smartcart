@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --light-bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-bg: #ecfdf5;
+            --success-text: #065f46;
+            --shadow-lg: 0 20px 45px rgba(15, 23, 42, 0.10);
+            --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 25%),
+                linear-gradient(135deg, #f8fafc, #eef2ff, #f8fafc);
+            color: var(--text-dark);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 24px rgba(2, 6, 23, 0.22);
+            padding: 14px 0;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.2px;
+            color: #fff !important;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.15rem;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+            flex-shrink: 0;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.86) !important;
+            font-weight: 500;
+            margin-left: 10px;
+            padding: 10px 14px !important;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #fff !important;
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        .logout-link:hover {
+            background: rgba(239, 68, 68, 0.14) !important;
+            color: #fecaca !important;
+        }
+
+        .navbar-toggler {
+            border: none;
+            box-shadow: none !important;
+        }
+
+        /* Header */
+        .page-header {
+            padding: 40px 0 20px;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.92));
+            color: white;
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .header-card::before {
+            content: "";
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            background: rgba(37, 99, 235, 0.18);
+            border-radius: 50%;
+        }
+
+        .header-card::after {
+            content: "";
+            position: absolute;
+            bottom: -60px;
+            left: -40px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            padding: 32px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #dbeafe;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .page-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.03em;
+        }
+
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 1rem;
+            max-width: 760px;
+            margin-bottom: 0;
+        }
+
+        /* Main Section */
+        .section-space {
+            padding: 20px 0 50px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(226, 232, 240, 0.92);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .content-card-header {
+            padding: 28px 28px 18px;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(248, 250, 252, 0.95), rgba(255, 255, 255, 0.9));
+        }
+
+        .content-card-header h3 {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .content-card-header p {
+            margin: 8px 0 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .content-card-body {
+            padding: 28px;
+        }
+
+        /* Profile Section */
+        .profile-photo-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 26px;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 22px;
+            background: linear-gradient(180deg, #f8fafc, #ffffff);
+            text-align: center;
+            height: 100%;
+        }
+
+        .profile-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ffffff;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+            margin-bottom: 18px;
+        }
+
+        .profile-placeholder {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #1d4ed8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 5px solid #ffffff;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
+            margin-bottom: 18px;
+        }
+
+        .profile-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+
+        /* Form */
+        .form-label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-control,
+        textarea.form-control {
+            border-radius: 14px;
+            border: 1px solid #dbe2ea;
+            min-height: 52px;
+            padding: 12px 16px;
+            font-size: 0.96rem;
+            color: var(--text-dark);
+            background-color: #ffffff;
+            box-shadow: none;
+            transition: all 0.25s ease;
+        }
+
+        .form-control:focus,
+        textarea.form-control:focus {
+            border-color: rgba(37, 99, 235, 0.45);
+            box-shadow: 0 0 0 0.22rem rgba(37, 99, 235, 0.12);
+        }
+
+        .form-hint {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            margin-top: 8px;
+        }
+
+        .upload-box {
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #f8fafc, #ffffff);
+            padding: 22px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-box:hover {
+            border-color: #93c5fd;
+            background: #f8fbff;
+        }
+
+        .upload-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(37, 99, 235, 0.10);
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 14px;
+        }
+
+        /* Alerts */
+        .alert {
+            border: none;
+            border-radius: 16px;
+            padding: 14px 18px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: var(--success-bg);
+            color: var(--success-text);
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 14px;
+            font-weight: 600;
+            padding: 12px 20px;
+            min-height: 50px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border: none;
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.22);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 28px rgba(37, 99, 235, 0.28);
+        }
+
+        .btn-outline-dark {
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+            background: white;
+        }
+
+        .btn-outline-dark:hover {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+
+        /* Info Cards */
+        .info-card {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            border-radius: 22px;
+            box-shadow: var(--shadow-md);
+            padding: 24px;
+            height: 100%;
+        }
+
+        .info-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(37, 99, 235, 0.10);
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+
+        .info-card h5 {
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .info-card p,
+        .info-card li {
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            line-height: 1.7;
+        }
+
+        .info-list {
+            padding-left: 18px;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            background: linear-gradient(135deg, #0f172a, #111827);
+            color: rgba(255, 255, 255, 0.82);
+            padding: 18px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-text {
+            font-size: 0.92rem;
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .navbar-nav .nav-link {
+                margin-left: 0;
+                margin-top: 6px;
+            }
+
+            .header-content,
+            .content-card-header,
+            .content-card-body,
+            .info-card {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .page-header {
+                padding: 24px 0 16px;
+            }
+
+            .section-space {
+                padding: 12px 0 35px;
+            }
+
+            .header-content,
+            .content-card-header,
+            .content-card-body,
+            .info-card {
+                padding: 18px;
+            }
+
+            .page-subtitle {
+                font-size: 0.93rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .action-buttons {
+                gap: 12px !important;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .brand-logo {
+                width: 38px;
+                height: 38px;
+                border-radius: 10px;
+                font-size: 1rem;
+            }
+
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
+            .form-control,
+            .btn {
+                min-height: 48px;
+            }
+
+            .upload-box,
+            .profile-photo-wrapper {
+                padding: 18px;
+            }
+
+            .profile-photo,
+            .profile-placeholder {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/admin-dashboard">
+                <span class="brand-logo"><i class="bi bi-cart3"></i></span>
+                <span style="font-family: sans-serif;">Smart Cart</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar"
+                aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse mt-3 mt-lg-0" id="adminNavbar">
+                <ul class="navbar-nav ms-auto text-center text-lg-start">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin-dashboard">
+                            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/add-item">
+                            <i class="bi bi-plus-circle me-1"></i> Add Item
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/item-list">
+                            <i class="bi bi-box-seam me-1"></i> View Items
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/profile">
+                            <i class="bi bi-person-circle me-1"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link logout-link" href="/admin-logout">
+                            <i class="bi bi-box-arrow-right me-1"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+
+        <!-- Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="header-card">
+                    <div class="header-content">
+                        <div class="header-badge">
+                            <i class="bi bi-shield-check"></i>
+                            Secure Corporate Administration
+                        </div>
+                        <h1 class="page-title">Admin Profile</h1>
+                        <p class="page-subtitle">
+                            Manage your profile details, credentials, and image from a polished enterprise-grade
+                            administration interface.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Section -->
+        <section class="section-space">
+            <div class="container">
+                <div class="row g-4 justify-content-center">
+
+                    <!-- Profile Form -->
+                    <div class="col-12 col-lg-8">
+                        <div class="content-card">
+
+                            <div class="content-card-header">
+                                <h3>Profile Management</h3>
+                                <p>Update your personal details, password, and profile image below.</p>
+                            </div>
+
+                            <div class="content-card-body">
+
+                                <!-- Flash Messages -->
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                {% for category, message in messages %}
+                                <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                                    <i class="bi bi-check-circle-fill me-2"></i>{{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+
+                                <form method="POST" action="/admin/profile" enctype="multipart/form-data">
+                                    <div class="row g-4">
+
+                                        <div class="col-12 col-md-5">
+                                            <div class="profile-photo-wrapper">
+                                                {% if admin.profile_image %}
+                                                <img src="/static/uploads/admin_profiles/{{ admin.profile_image }}"
+                                                    alt="Admin Profile" class="profile-photo">
+                                                {% else %}
+                                                <div class="profile-placeholder">
+                                                    <i class="bi bi-person-fill"></i>
+                                                </div>
+                                                {% endif %}
+
+                                                <div class="profile-name">{{ admin.name }}</div>
+                                                <div class="profile-email">{{ admin.email }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-7">
+                                            <div class="row g-4">
+
+                                                <div class="col-12">
+                                                    <label class="form-label">Name</label>
+                                                    <input type="text" name="name" class="form-control"
+                                                        value="{{ admin.name }}" placeholder="Enter your full name"
+                                                        required>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <label class="form-label">Email</label>
+                                                    <input type="email" name="email" class="form-control"
+                                                        value="{{ admin.email }}" placeholder="Enter your email address"
+                                                        required>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <label class="form-label">New Password</label>
+                                                    <input type="password" name="password" class="form-control"
+                                                        placeholder="Leave blank if you do not want to change password">
+                                                    <div class="form-hint">Keep this empty if you want to retain your
+                                                        current password.</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label class="form-label">Upload New Profile Image</label>
+                                            <div class="upload-box text-center">
+                                                <div class="upload-icon mx-auto">
+                                                    <i class="bi bi-cloud-arrow-up"></i>
+                                                </div>
+                                                <h6 class="fw-bold mb-2">Choose a New Profile Image</h6>
+                                                <p class="text-muted mb-3">Upload a professional image for your admin
+                                                    account.</p>
+                                                <input type="file" name="profile_image" class="form-control"
+                                                    accept="image/*">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div
+                                                class="d-flex flex-column flex-md-row justify-content-between align-items-stretch action-buttons gap-3">
+                                                <a href="/admin-dashboard" class="btn btn-outline-dark">
+                                                    <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+                                                </a>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-check2-circle me-2"></i>Update Profile
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-center text-md-start">
+                <p class="footer-text mb-0">© 2026 Admin Control Panel. All rights reserved.</p>
+                <p class="footer-text mb-0">Professional enterprise-grade profile management interface.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Signup</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --light-bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --danger-bg: #fef2f2;
+            --danger-text: #b91c1c;
+            --shadow-lg: 0 20px 45px rgba(15, 23, 42, 0.10);
+            --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 25%),
+                linear-gradient(135deg, #f8fafc, #eef2ff, #f8fafc);
+            color: var(--text-dark);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 24px rgba(2, 6, 23, 0.22);
+            padding: 14px 0;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.2px;
+            color: #fff !important;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.15rem;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+            flex-shrink: 0;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.86) !important;
+            font-weight: 500;
+            margin-left: 10px;
+            padding: 10px 14px !important;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #fff !important;
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        .login-link:hover {
+            background: rgba(37, 99, 235, 0.18) !important;
+            color: #dbeafe !important;
+        }
+
+        .navbar-toggler {
+            border: none;
+            box-shadow: none !important;
+        }
+
+        /* Header */
+        .page-header {
+            padding: 40px 0 20px;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.92));
+            color: white;
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .header-card::before {
+            content: "";
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            background: rgba(37, 99, 235, 0.18);
+            border-radius: 50%;
+        }
+
+        .header-card::after {
+            content: "";
+            position: absolute;
+            bottom: -60px;
+            left: -40px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            padding: 32px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #dbeafe;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .page-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.03em;
+        }
+
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 1rem;
+            max-width: 760px;
+            margin-bottom: 0;
+        }
+
+        /* Section */
+        .section-space {
+            padding: 20px 0 50px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(226, 232, 240, 0.92);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .content-card-header {
+            padding: 28px 28px 18px;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(248, 250, 252, 0.95), rgba(255, 255, 255, 0.9));
+        }
+
+        .content-card-header h3 {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .content-card-header p {
+            margin: 8px 0 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .content-card-body {
+            padding: 28px;
+        }
+
+        .signup-visual {
+            background: linear-gradient(135deg, #eff6ff, #ffffff);
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 22px;
+            padding: 28px;
+            text-align: center;
+            height: 100%;
+        }
+
+        .signup-icon {
+            width: 86px;
+            height: 86px;
+            border-radius: 24px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 18px 35px rgba(37, 99, 235, 0.26);
+        }
+
+        .signup-visual h4 {
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .signup-visual p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* Form */
+        .form-label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            border-radius: 14px;
+            border: 1px solid #dbe2ea;
+            min-height: 52px;
+            padding: 12px 16px;
+            font-size: 0.96rem;
+            color: var(--text-dark);
+            background-color: #ffffff;
+            box-shadow: none;
+            transition: all 0.25s ease;
+        }
+
+        .form-control:focus {
+            border-color: rgba(37, 99, 235, 0.45);
+            box-shadow: 0 0 0 0.22rem rgba(37, 99, 235, 0.12);
+        }
+
+        .form-hint {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            margin-top: 8px;
+        }
+
+        /* Alerts */
+        .alert {
+            border: none;
+            border-radius: 16px;
+            padding: 14px 18px;
+            font-weight: 500;
+        }
+
+        .alert-danger {
+            background: var(--danger-bg);
+            color: var(--danger-text);
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 14px;
+            font-weight: 600;
+            padding: 12px 20px;
+            min-height: 50px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border: none;
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.22);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 28px rgba(37, 99, 235, 0.28);
+        }
+
+        .auth-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        .auth-text a {
+            color: var(--accent);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .auth-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Side Cards */
+        .info-card {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            border-radius: 22px;
+            box-shadow: var(--shadow-md);
+            padding: 24px;
+            height: 100%;
+        }
+
+        .info-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(37, 99, 235, 0.10);
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+
+        .info-card h5 {
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .info-card p,
+        .info-card li {
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            line-height: 1.7;
+        }
+
+        .info-list {
+            padding-left: 18px;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            background: linear-gradient(135deg, #0f172a, #111827);
+            color: rgba(255, 255, 255, 0.82);
+            padding: 18px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-text {
+            font-size: 0.92rem;
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .navbar-nav .nav-link {
+                margin-left: 0;
+                margin-top: 6px;
+            }
+
+            .header-content,
+            .content-card-header,
+            .content-card-body,
+            .info-card,
+            .signup-visual {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .page-header {
+                padding: 24px 0 16px;
+            }
+
+            .section-space {
+                padding: 12px 0 35px;
+            }
+
+            .header-content,
+            .content-card-header,
+            .content-card-body,
+            .info-card,
+            .signup-visual {
+                padding: 18px;
+            }
+
+            .page-subtitle {
+                font-size: 0.93rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .brand-logo {
+                width: 38px;
+                height: 38px;
+                border-radius: 10px;
+                font-size: 1rem;
+            }
+
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
+            .form-control,
+            .btn {
+                min-height: 48px;
+            }
+
+            .signup-icon {
+                width: 74px;
+                height: 74px;
+                font-size: 1.7rem;
+                border-radius: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <span class="brand-logo"><i class="bi bi-cart3"></i></span>
+                <span style="font-family: sans-serif;">Smart Cart</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse mt-3 mt-lg-0" id="mainNavbar">
+                <ul class="navbar-nav ms-auto text-center text-lg-start">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="bi bi-house-door me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">
+                            <i class="bi bi-info-circle me-1"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">
+                            <i class="bi bi-envelope me-1"></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link login-link" href="/admin-login">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+
+        <!-- Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="header-card">
+                    <div class="header-content">
+                        <div class="header-badge">
+                            <i class="bi bi-shield-check"></i>
+                            Corporate Administration Access
+                        </div>
+                        <h1 class="page-title">Admin Registration</h1>
+                        <p class="page-subtitle">
+                            Register your admin account with a secure and premium enterprise-style onboarding interface.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Section -->
+        <section class="section-space">
+            <div class="container">
+                <div class="row g-4 justify-content-center">
+
+                    <!-- Signup Form -->
+                    <div class="col-12 col-lg-8">
+                        <div class="content-card">
+                            <div class="content-card-header">
+                                <h3>Create Admin Account</h3>
+                                <p>Enter your details below to receive an OTP and continue the registration process.</p>
+                            </div>
+
+                            <div class="content-card-body">
+
+                                <!-- Flash Messages -->
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                {% for category, message in messages %}
+                                <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                                    <i class="bi bi-exclamation-circle-fill me-2"></i>{{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+
+                                <form method="POST" action="/admin-signup">
+                                    <div class="row g-4">
+
+                                        <div class="col-12">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" name="name" class="form-control"
+                                                placeholder="Enter your full name" required>
+                                            <div class="form-hint">Use your official admin name for account
+                                                identification.</div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label class="form-label">Email Address</label>
+                                            <input type="email" name="email" class="form-control"
+                                                placeholder="Enter your email address" required>
+                                            <div class="form-hint">The OTP will be sent to this email address.</div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <i class="bi bi-send-check me-2"></i>Send OTP
+                                            </button>
+                                        </div>
+
+                                        <div class="col-12 text-center">
+                                            <p class="auth-text">
+                                                Already have an account?
+                                                <a href="/admin-login">LOGIN</a>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side -->
+
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-center text-md-start">
+                <p class="footer-text mb-0">© 2026 Admin Portal. All rights reserved.</p>
+                <p class="footer-text mb-0">Professional enterprise-grade registration interface.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
