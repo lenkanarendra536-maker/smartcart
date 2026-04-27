@@ -1,340 +1,263 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "user/base_user.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
+{% block title %}Products{% endblock %}
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+{% block css %}
+<style>
+    .products-page {
+        padding: 30px 0 60px;
+    }
 
-    <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    .page-title {
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 24px;
+    }
 
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #eef2f7, #dbeafe);
-            margin: 0;
+    .filter-box {
+        background: #fff;
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
+        height: 100%;
+    }
+
+    .filter-form {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .filter-form .form-control,
+    .filter-form .form-select {
+        min-height: 50px;
+        border-radius: 14px;
+        font-size: 0.95rem;
+    }
+
+    .filter-btn {
+        min-height: 50px;
+        border-radius: 14px;
+        padding: 0 18px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .product-col {
+        display: flex;
+    }
+
+    .product-card {
+        width: 100%;
+        min-height: 390px;
+        display: flex;
+        flex-direction: column;
+        border: none;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
+        transition: 0.3s;
+        padding: 18px;
+        text-align: center;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 18px 38px rgba(15, 23, 42, 0.14);
+    }
+
+    .product-img-wrap {
+        height: 155px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
+    }
+
+    .product-img {
+        max-height: 150px;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .product-name {
+        min-height: 44px;
+        font-size: 1rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .product-category {
+        min-height: 24px;
+        color: #64748b;
+        margin-bottom: 8px;
+    }
+
+    .product-price {
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 16px;
+    }
+
+    .product-actions {
+        margin-top: auto;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .product-actions form {
+        flex: 1;
+    }
+
+    .product-actions .btn {
+        width: 100%;
+        border-radius: 12px;
+        font-weight: 700;
+        min-height: 44px;
+    }
+
+    @media (max-width: 767px) {
+        .products-page {
+            padding: 22px 0 45px;
         }
 
-        /* ===== NEW NAVBAR CSS ===== */
-
-        .navbar {
-            background: rgba(15, 23, 42, 0.94);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 24px rgba(2, 6, 23, 0.22);
-            padding: 14px 0;
+        .filter-form {
+            flex-direction: column;
         }
 
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #fff !important;
-        }
-
-        .brand-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #2563eb, #1e40af);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
-        }
-
-        .navbar-nav .nav-link {
-            color: rgba(255, 255, 255, 0.86) !important;
-            font-weight: 500;
-            margin-left: 10px;
-            padding: 10px 14px !important;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
-            color: #fff !important;
-            background: rgba(255, 255, 255, 0.10);
-        }
-
-        .logout-link:hover {
-            background: rgba(220, 38, 38, 0.18) !important;
-            color: #fecaca !important;
-        }
-
-
-
-        .cart-nav-link {
-            display: inline-flex !important;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 12px !important;
-        }
-
-        .cart-icon-box {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-        }
-
-        .cart-icon-box i {
-            font-size: 24px;
-            line-height: 1;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -10px;
-            background: red;
-            color: white;
-            font-size: 10px;
-            min-width: 18px;
-            height: 18px;
-            padding: 0 5px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        @media(max-width:991px) {
-            .navbar-nav .nav-link {
-                margin-left: 0;
-                margin-top: 6px;
-            }
-        }
-
-        @media(max-width:768px) {
-            .cart-badge {
-                top: -8px;
-                right: -10px;
-            }
-        }
-
-        @media(max-width:575px) {
-            .navbar-brand {
-                font-size: 1rem;
-            }
-
-            .brand-logo {
-                width: 38px;
-                height: 38px;
-                font-size: 1rem;
-            }
-        }
-
-        /* ===== ORIGINAL CSS ===== */
-
-        .alert {
-            transition: opacity 0.5s ease-out;
+        .filter-form .form-control,
+        .filter-form .form-select,
+        .filter-btn {
+            width: 100%;
         }
 
         .product-card {
-            border: none;
-            border-radius: 15px;
-            background: white;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
+            min-height: 365px;
             padding: 15px;
-            text-align: center;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
+        .product-img-wrap {
+            height: 130px;
         }
 
         .product-img {
-            height: 150px;
-            object-fit: contain;
+            max-height: 125px;
         }
 
-        .input-group-text {
-            border-radius: 10px 0 0 10px;
+        .product-actions {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .product-card {
+            min-height: 350px;
+            padding: 13px;
         }
 
-        .input-group .form-control,
-        .input-group .form-select {
-            border-radius: 0;
+        .product-name {
+            font-size: 0.92rem;
+            min-height: 40px;
         }
 
-        .input-group .btn {
-            border-radius: 0 10px 10px 0;
+        .product-category,
+        .product-price {
+            font-size: 0.9rem;
         }
 
-        footer {
-            background: #0f172a;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            margin-top: 30px;
+        .product-actions .btn {
+            min-height: 40px;
+            font-size: 0.88rem;
         }
-    </style>
-</head>
+    }
+</style>
+{% endblock %}
 
-<body>
+{% block content %}
 
-    <!-- ===== NEW NAVBAR ===== -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
+<div class="container products-page">
 
-            <a class="navbar-brand" href="/user-dashboard">
-                <span class="brand-logo"><i class="bi bi-cart3"></i></span>
-                <span>Smart Cart</span>
-            </a>
+    <h3 class="page-title">All Products</h3>
 
-            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="row g-3 mb-4">
 
-            <div class="collapse navbar-collapse mt-3 mt-lg-0" id="nav">
+        <div class="col-12 col-md-6">
+            <div class="filter-box">
+                <form method="GET" action="/user/products" class="filter-form">
+                    <input type="text" name="search" class="form-control"
+                        placeholder="Search product..."
+                        value="{{ request.args.get('search','') }}">
 
-
-
-                <ul class="navbar-nav ms-auto text-center text-lg-start align-items-lg-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user-dashboard"><i class="bi bi-house-door"></i> Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/user/products"><i class="bi bi-bag"></i> Shop</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/my-orders"><i class="bi bi-box-seam"></i> Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/profile">
-                            <i class="bi bi-person-circle"></i> Hi, {{ session.get('user_name','Profile') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link cart-nav-link" href="/user/cart">
-                            <span class="cart-icon-box">
-                                <i class="bi bi-cart3"></i>
-                                <span class="cart-badge">{{ cart_count if cart_count else 0 }}</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link logout-link" href="/user-logout">
-                            <i class="bi bi-box-arrow-right"></i> Logout
-                        </a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </nav>
-
-    <!-- MAIN -->
-    <div class="container mt-4">
-
-        <h3 class="mb-3">All Products</h3>
-
-        {% for category, message in get_flashed_messages(with_categories=true) %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show">
-            {{ message }}
-        </div>
-        {% endfor %}
-
-        <div class="row g-3 mb-4">
-
-            <div class="col-md-6">
-                <form method="GET" action="/user/products">
-                    <div class="input-group">
-                        <span class="input-group-text bg-white">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <input type="text" name="search" class="form-control"
-                            value="{{ request.args.get('search','') }}">
-                        <button class="btn btn-primary">Search</button>
-                    </div>
+                    <button class="btn btn-primary filter-btn">
+                        <i class="bi bi-search me-1"></i> Search
+                    </button>
                 </form>
             </div>
-
-            <div class="col-md-6">
-                <form method="GET" action="/user/products">
-                    <div class="input-group">
-                        <span class="input-group-text bg-white">
-                            <i class="bi bi-funnel"></i>
-                        </span>
-                        <select name="category" class="form-select">
-                            <option value="">All Categories</option>
-                            {% for cat in categories %}
-                            <option value="{{ cat.category }}" {% if request.args.get('category')==cat.category %}
-                                selected {% endif %}>
-                                {{ cat.category }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                        <button class="btn btn-dark">Filter</button>
-                    </div>
-                </form>
-            </div>
-
         </div>
 
-        <div class="row g-4">
+        <div class="col-12 col-md-6">
+            <div class="filter-box">
+                <form method="GET" action="/user/products" class="filter-form">
+                    <select name="category" class="form-select">
+                        <option value="">All Categories</option>
 
-            {% for product in products %}
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="product-card">
+                        {% for cat in categories %}
+                        <option value="{{ cat.category }}"
+                            {% if request.args.get('category') == cat.category %}selected{% endif %}>
+                            {{ cat.category }}
+                        </option>
+                        {% endfor %}
+                    </select>
 
-                    <img src="/static/uploads/product_images/{{ product.image }}" class="product-img">
-
-                    <h6>{{ product.name }}</h6>
-                    <p class="text-muted">{{ product.category }}</p>
-                    <p class="fw-bold">₹{{ product.price }}</p>
-
-                    <div class="d-flex justify-content-evenly">
-                        <form action="/user/product/{{ product.product_id }}">
-                            <button class="btn btn-primary">View</button>
-                        </form>
-
-                        <form action="/user/add-to-cart/{{ product.product_id }}" method="POST">
-                            <button class="btn btn-success">
-                                <i class="bi bi-cart3"></i> Add
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
+                    <button class="btn btn-dark filter-btn">
+                        <i class="bi bi-funnel me-1"></i> Filter
+                    </button>
+                </form>
             </div>
-            {% endfor %}
-
         </div>
 
     </div>
 
-    <footer>
-        © 2026 SmartCart • Products Page
-    </footer>
+    <div class="row g-4">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        setTimeout(function () {
-            let alerts = document.querySelectorAll('.alert');
-            alerts.forEach(function (alert) {
-                let bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
-            });
-        }, 3000);
-    </script>
+        {% for product in products %}
+        <div class="col-6 col-md-4 col-lg-3 product-col">
+            <div class="product-card">
 
+                <div class="product-img-wrap">
+                    <img src="/static/uploads/product_images/{{ product.image }}"
+                        class="product-img"
+                        alt="{{ product.name }}">
+                </div>
 
-</body>
+                <h6 class="product-name">{{ product.name }}</h6>
+                <p class="product-category">{{ product.category }}</p>
+                <p class="product-price">₹{{ product.price }}</p>
 
-</html>
+                <div class="product-actions">
+                    <form action="/user/product/{{ product.product_id }}" method="GET">
+                        <button class="btn btn-primary">View</button>
+                    </form>
+
+                    <form action="/user/add-to-cart/{{ product.product_id }}" method="POST">
+                        <button class="btn btn-success">
+                            <i class="bi bi-cart3"></i> Add
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

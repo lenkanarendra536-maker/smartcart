@@ -1,0 +1,176 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}All Orders{% endblock %}
+
+{% block css %}
+<style>
+    .page-title {
+        font-weight: 700;
+        margin-bottom: 18px;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table th {
+        background-color: #f5f5f5;
+        white-space: nowrap;
+    }
+
+    .table td {
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .view-btn {
+        padding: 7px 12px;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 7px;
+        display: inline-block;
+    }
+
+    .view-btn:hover {
+        background: #0056b3;
+        color: white;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: #dbeafe;
+        color: #1d4ed8;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    footer {
+        background: #0f172a;
+        color: white;
+        text-align: center;
+        padding: 12px;
+        margin-top: auto;
+    }
+
+    @media (max-width: 991px) {
+        .nav-link {
+            margin-left: 0;
+            margin-top: 6px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .orders-card {
+            padding: 16px;
+            margin: 20px 12px;
+        }
+
+        .page-title {
+            font-size: 1.35rem;
+            text-align: center;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            min-width: 760px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .navbar-brand {
+            font-size: 0.95rem;
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+        }
+
+        .orders-card {
+            padding: 14px;
+        }
+
+        .page-title {
+            font-size: 1.2rem;
+        }
+
+        .table th,
+        .table td {
+            font-size: 0.88rem;
+            padding: 8px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="main-content">
+    <div class="container">
+
+        <div class="orders-card">
+            <h2 class="page-title">
+                <i class="bi bi-box-seam me-2"></i> All Customer Orders
+            </h2>
+
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle text-center">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>User</th>
+                            <th>Amount</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>View</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ order.order_id }}</td>
+
+                            <!-- ✅ UPDATED USER COLUMN -->
+                            <td>
+                                {{ order.full_name if order.full_name else 'Unknown User' }}
+                                <br>
+                                <small class="text-muted">ID: {{ order.user_id }}</small>
+                            </td>
+
+                            <td>₹{{ order.amount }}</td>
+                            <td>{{ order.payment_status }}</td>
+
+                            <td>
+                                <span class="status-badge">
+                                    {{ order.order_status }}
+                                </span>
+                            </td>
+
+                            <td>{{ order.created_at }}</td>
+
+                            <td>
+                                <a class="view-btn" href="/admin/order/{{ order.order_id }}">
+                                    <i class="bi bi-eye me-1"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

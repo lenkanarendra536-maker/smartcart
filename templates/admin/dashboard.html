@@ -1,566 +1,800 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "admin/base_admin.html" %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
+{% block title %}Admin Dashboard{% endblock %}
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
+{% block css %}
+<style>
     :root {
-      --primary: #0f172a;
-      --secondary: #1e293b;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --light-bg: #f8fafc;
-      --card-bg: rgba(255, 255, 255, 0.96);
-      --text-dark: #0f172a;
-      --text-muted: #64748b;
-      --border-color: #e2e8f0;
-      --success-bg: #ecfdf5;
-      --success-text: #065f46;
-      --shadow-lg: 0 20px 45px rgba(15, 23, 42, 0.10);
-      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+        --accent: #2563eb;
+        --accent-hover: #1d4ed8;
+        --text-dark: #0f172a;
+        --text-muted: #64748b;
+        --card-bg: rgba(255, 255, 255, 0.96);
+        --border-color: #e2e8f0;
+        --success: #16a34a;
+        --warning: #f59e0b;
+        --danger: #dc2626;
+        --dark: #0f172a;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 25%),
-        linear-gradient(135deg, #f8fafc, #eef2ff, #f8fafc);
-      color: var(--text-dark);
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .main-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Navbar */
-    .navbar {
-      background: rgba(15, 23, 42, 0.94);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 24px rgba(2, 6, 23, 0.22);
-      padding: 14px 0;
-    }
-
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.2px;
-      color: #fff !important;
-    }
-
-    .brand-logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #2563eb, #1e40af);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1.15rem;
-      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
-      flex-shrink: 0;
-    }
-
-    .navbar-nav .nav-link {
-      color: rgba(255, 255, 255, 0.86) !important;
-      font-weight: 500;
-      margin-left: 10px;
-      padding: 10px 14px !important;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-    }
-
-    .navbar-nav .nav-link:hover,
-    .navbar-nav .nav-link.active {
-      color: #fff !important;
-      background: rgba(255, 255, 255, 0.10);
-    }
-
-    .logout-link:hover {
-      background: rgba(239, 68, 68, 0.14) !important;
-      color: #fecaca !important;
-    }
-
-    .navbar-toggler {
-      border: none;
-      box-shadow: none !important;
-    }
-
-    /* Hero */
     .page-header {
-      padding: 40px 0 20px;
+        padding: 40px 0 20px;
     }
 
     .header-card {
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.97), rgba(30, 41, 59, 0.93));
-      color: white;
-      border: none;
-      border-radius: 26px;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      position: relative;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.97), rgba(30, 41, 59, 0.93));
+        color: white;
+        border-radius: 26px;
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.10);
+        position: relative;
+        overflow: hidden;
     }
 
     .header-card::before {
-      content: "";
-      position: absolute;
-      top: -50px;
-      right: -50px;
-      width: 190px;
-      height: 190px;
-      background: rgba(37, 99, 235, 0.18);
-      border-radius: 50%;
+        content: "";
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 190px;
+        height: 190px;
+        background: rgba(37, 99, 235, 0.18);
+        border-radius: 50%;
     }
 
     .header-card::after {
-      content: "";
-      position: absolute;
-      bottom: -65px;
-      left: -45px;
-      width: 210px;
-      height: 210px;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 50%;
+        content: "";
+        position: absolute;
+        bottom: -65px;
+        left: -45px;
+        width: 210px;
+        height: 210px;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 50%;
     }
 
     .header-content {
-      position: relative;
-      z-index: 2;
-      padding: 34px;
+        position: relative;
+        z-index: 2;
+        padding: 34px;
     }
 
     .header-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.10);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #dbeafe;
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.10);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 18px;
     }
 
     .page-title {
-      font-size: clamp(1.9rem, 4vw, 3rem);
-      font-weight: 800;
-      margin-bottom: 10px;
-      letter-spacing: -0.03em;
+        font-size: clamp(1.9rem, 4vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 10px;
     }
 
     .page-subtitle {
-      color: rgba(255, 255, 255, 0.78);
-      font-size: 1rem;
-      max-width: 760px;
-      margin-bottom: 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 1rem;
+        max-width: 720px;
     }
 
-    /* Main Section */
+    .header-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+    }
+
+    .header-btn {
+        border-radius: 14px;
+        padding: 11px 18px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .header-btn-primary {
+        background: white;
+        color: var(--accent);
+    }
+
+    .header-btn-outline {
+        border: 1px solid rgba(255,255,255,0.25);
+        color: white;
+    }
+
+    .header-btn:hover {
+        transform: translateY(-3px);
+    }
+
+    .admin-marquee {
+        margin-top: 22px;
+        background: linear-gradient(90deg, #2563eb, #1d4ed8, #0f172a);
+        color: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 12px 28px rgba(37, 99, 235, 0.20);
+    }
+
+    .marquee-track {
+        white-space: nowrap;
+        padding: 12px 0;
+        animation: marquee 20s linear infinite;
+        font-weight: 600;
+    }
+
+    .marquee-track span {
+        margin-right: 55px;
+    }
+
+    @keyframes marquee {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+
     .section-space {
-      padding: 20px 0 50px;
+        padding: 25px 0 55px;
+    }
+
+    .section-title {
+        font-weight: 800;
+        color: var(--text-dark);
+        margin-bottom: 6px;
+    }
+
+    .section-subtitle {
+        color: var(--text-muted);
+        margin-bottom: 24px;
+    }
+
+    .stats-card,
+    .dashboard-card,
+    .banner-card,
+    .quick-card,
+    .activity-card {
+        background: var(--card-bg);
+        border-radius: 24px;
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.10);
+        border: 1px solid var(--border-color);
+        transition: 0.3s;
+    }
+
+    .stats-card:hover,
+    .dashboard-card:hover,
+    .quick-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stats-card {
+        padding: 24px;
+        height: 100%;
+    }
+
+    .stats-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+    }
+
+    .stats-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 17px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        background: rgba(37, 99, 235, 0.10);
+        color: var(--accent);
+    }
+
+    .stats-growth {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--success);
+        background: rgba(22, 163, 74, 0.10);
+        padding: 5px 10px;
+        border-radius: 999px;
+    }
+
+    .stats-card h3 {
+        font-weight: 800;
+        margin-bottom: 4px;
+        color: var(--text-dark);
+    }
+
+    .stats-card p {
+        color: var(--text-muted);
+        margin-bottom: 0;
+        font-weight: 500;
     }
 
     .dashboard-card {
-      background: var(--card-bg);
-      border: 1px solid rgba(226, 232, 240, 0.92);
-      border-radius: 24px;
-      box-shadow: var(--shadow-lg);
-      padding: 28px;
-      height: 100%;
-      transition: all 0.3s ease;
-    }
-
-    .dashboard-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+        padding: 28px;
+        height: 100%;
     }
 
     .card-icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(37, 99, 235, 0.10);
-      color: var(--accent);
-      font-size: 1.4rem;
-      margin-bottom: 18px;
+        width: 58px;
+        height: 58px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(37, 99, 235, 0.10);
+        color: var(--accent);
+        font-size: 1.4rem;
+        margin-bottom: 18px;
     }
 
     .dashboard-card h4 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: 10px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--text-dark);
     }
 
     .dashboard-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.7;
-      margin-bottom: 22px;
-    }
-
-    .dashboard-card a {
-      text-decoration: none;
+        color: var(--text-muted);
+        margin-bottom: 20px;
     }
 
     .btn {
-      border-radius: 14px;
-      font-weight: 600;
-      padding: 12px 20px;
-      min-height: 50px;
-      transition: all 0.25s ease;
+        border-radius: 14px;
+        font-weight: 600;
+        padding: 12px 20px;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-      border: none;
-      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.22);
+        background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+        border: none;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 28px rgba(37, 99, 235, 0.28);
+    .banner-card {
+        overflow: hidden;
     }
 
-    .btn-outline-dark {
-      border: 1px solid #cbd5e1;
-      color: #0f172a;
-      background: white;
+    .carousel-item {
+        min-height: 260px;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: white;
+        border-radius: 24px;
     }
 
-    .btn-outline-dark:hover {
-      background: #0f172a;
-      color: white;
-      border-color: #0f172a;
+    .carousel-content {
+        padding: 42px;
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
-    .btn-outline-danger {
-      border: 1px solid #fecaca;
-      color: #dc2626;
-      background: white;
+    .carousel-content h2 {
+        font-weight: 800;
+        font-size: clamp(1.7rem, 3vw, 2.5rem);
+        margin-bottom: 12px;
     }
 
-    .btn-outline-danger:hover {
-      background: #dc2626;
-      color: white;
-      border-color: #dc2626;
+    .carousel-content p {
+        color: rgba(255,255,255,0.76);
+        max-width: 650px;
+        margin-bottom: 22px;
     }
 
-    /* Welcome Stats */
-    .stat-card {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(226, 232, 240, 0.95);
-      border-radius: 22px;
-      box-shadow: var(--shadow-md);
-      padding: 24px;
-      height: 100%;
+    .carousel-badge {
+        width: fit-content;
+        background: rgba(255,255,255,0.12);
+        padding: 7px 13px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        margin-bottom: 16px;
     }
 
-    .stat-card h5 {
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--text-dark);
+    .quick-card {
+        padding: 24px;
+        height: 100%;
+        text-decoration: none;
+        display: block;
+        color: inherit;
     }
 
-    .stat-card p {
-      color: var(--text-muted);
-      font-size: 0.94rem;
-      line-height: 1.7;
-      margin-bottom: 0;
+    .quick-card:hover {
+        color: inherit;
     }
 
-    .stat-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(37, 99, 235, 0.10);
-      color: var(--accent);
-      font-size: 1.2rem;
-      margin-bottom: 16px;
+    .quick-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(37, 99, 235, 0.10);
+        color: var(--accent);
+        font-size: 1.3rem;
+        margin-bottom: 15px;
     }
 
-    /* Alerts */
-    .alert {
-      border: none;
-      border-radius: 16px;
-      padding: 14px 18px;
-      font-weight: 500;
+    .quick-card h5 {
+        font-weight: 800;
+        color: var(--text-dark);
+        margin-bottom: 7px;
     }
 
-    .alert-success {
-      background: var(--success-bg);
-      color: var(--success-text);
-    }
-
-    /* Footer */
-    .footer {
-      margin-top: auto;
-      background: linear-gradient(135deg, #0f172a, #111827);
-      color: rgba(255, 255, 255, 0.82);
-      padding: 18px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .footer-text {
-      font-size: 0.92rem;
-      margin: 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 991.98px) {
-      .navbar-nav .nav-link {
-        margin-left: 0;
-        margin-top: 6px;
-      }
-
-      .header-content,
-      .dashboard-card,
-      .stat-card {
-        padding: 22px;
-      }
-    }
-
-    @media (max-width: 767.98px) {
-      .page-header {
-        padding: 24px 0 16px;
-      }
-
-      .section-space {
-        padding: 12px 0 35px;
-      }
-
-      .header-content,
-      .dashboard-card,
-      .stat-card {
-        padding: 18px;
-      }
-
-      .page-subtitle {
+    .quick-card p {
+        color: var(--text-muted);
         font-size: 0.93rem;
-      }
-
-      .btn {
-        width: 100%;
-      }
+        margin-bottom: 0;
     }
 
-    @media (max-width: 575.98px) {
-      .brand-logo {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        font-size: 1rem;
-      }
-
-      .navbar-brand {
-        font-size: 1rem;
-      }
-
-      .btn {
-        min-height: 48px;
-      }
+    .activity-card {
+        padding: 28px;
+        height: 100%;
     }
-  </style>
-</head>
 
-<body>
+    .activity-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    .activity-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .activity-list li:last-child {
+        border-bottom: none;
+    }
+
+    .activity-dot {
+        width: 12px;
+        height: 12px;
+        background: var(--accent);
+        border-radius: 50%;
+        margin-top: 6px;
+        flex-shrink: 0;
+    }
+
+    .activity-list strong {
+        color: var(--text-dark);
+        display: block;
+    }
+
+    .activity-list span {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .corporate-footer-space {
+        padding-bottom: 40px;
+    }
+
+    @media (max-width: 991px) {
+        .header-content {
+            padding: 28px;
+        }
+
+        .carousel-content {
+            padding: 32px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .page-header {
+            padding: 25px 0 15px;
+        }
+
+        .header-card,
+        .stats-card,
+        .dashboard-card,
+        .banner-card,
+        .quick-card,
+        .activity-card {
+            border-radius: 20px;
+        }
+
+        .header-actions {
+            flex-direction: column;
+        }
+
+        .header-btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .stats-card,
+        .dashboard-card,
+        .quick-card,
+        .activity-card {
+            padding: 22px;
+        }
+
+        .carousel-content {
+            min-height: 300px;
+            padding: 28px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header-content {
+            padding: 24px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+        }
+
+        .marquee-track {
+            font-size: 0.85rem;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<section class="page-header">
     <div class="container">
-      <a class="navbar-brand" href="/admin-dashboard">
-        <span class="brand-logo"><i class="bi bi-cart3"></i></span>
-        <span style="font-family: sans-serif;">Smart Cart</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar"
-        aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse mt-3 mt-lg-0" id="adminNavbar">
-        <ul class="navbar-nav ms-auto text-center text-lg-start">
-          <li class="nav-item">
-            <a class="nav-link" href="/admin-dashboard">
-              <i class="bi bi-speedometer2 me-1"></i> Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/add-item">
-              <i class="bi bi-plus-circle me-1"></i> Add Item
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/item-list">
-              <i class="bi bi-box-seam me-1"></i> View Items
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/profile">
-              <i class="bi bi-person-circle me-1"></i> Profile
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link logout-link" href="/admin-logout">
-              <i class="bi bi-box-arrow-right me-1"></i> Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- Flash Messages -->
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-  <div class="row mb-4">
-    <div class="col-12">
-      {% for category, message in messages %}
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle-fill me-2"></i>{{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-  {% endwith %}
-
-  <div class="main-wrapper">
-
-
-    <!-- Header -->
-    <section class="page-header">
-      <div class="container">
         <div class="header-card">
-          <div class="header-content">
-            <div class="header-badge">
-              <i class="bi bi-shield-check"></i>
-              Enterprise Administration Dashboard
+            <div class="header-content">
+                <div class="header-badge">
+                    <i class="bi bi-shield-check"></i>
+                    Enterprise Administration Dashboard
+                </div>
+
+                <h1 class="page-title">Welcome, {{ admin_name }}</h1>
+
+                <p class="page-subtitle">
+                    Manage products, orders, categories, customers, and administration workflow through a premium corporate dashboard.
+                </p>
+
+                <div class="header-actions">
+                    <a href="/admin/products" class="header-btn header-btn-primary">
+                        <i class="bi bi-box-seam"></i> Manage Products
+                    </a>
+                    <a href="/admin/orders" class="header-btn header-btn-outline">
+                        <i class="bi bi-bag-check"></i> View Orders
+                    </a>
+                </div>
             </div>
-            <h1 class="page-title">Welcome, {{ admin_name }}</h1>
-            <p class="page-subtitle">
-              Manage products, maintain your profile, and control your administration workflow through a premium
-              corporate dashboard interface.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Dashboard -->
-    <section class="section-space">
-      <div class="container">
-
-
-
-        <!-- Action Cards -->
-        <div class="row g-4 mb-4">
-          <div class="col-12 col-md-6 col-xl-3">
-            <div class="dashboard-card">
-              <div class="card-icon">
-                <i class="bi bi-person-vcard"></i>
-              </div>
-              <h4>Admin Profile</h4>
-              <p>Update your profile details, manage account information, and keep your administrator identity
-                professional and current.</p>
-              <a href="/admin/profile" class="btn btn-outline-dark w-100">
-                <i class="bi bi-arrow-right-circle me-2"></i>Open Profile
-              </a>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-xl-3">
-            <div class="dashboard-card">
-              <div class="card-icon">
-                <i class="bi bi-plus-square"></i>
-              </div>
-              <h4>Add Product</h4>
-              <p>Create and publish new product listings with a clean, structured, and enterprise-grade product
-                management workflow.</p>
-              <a href="/admin/add-item" class="btn btn-primary w-100">
-                <i class="bi bi-plus-circle me-2"></i>Add Item
-              </a>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-xl-3">
-            <div class="dashboard-card">
-              <div class="card-icon">
-                <i class="bi bi-boxes"></i>
-              </div>
-              <h4>View All Products</h4>
-              <p>Access your product inventory, review listings, and manage catalog items efficiently from one central
-                interface.</p>
-              <a href="/admin/item-list" class="btn btn-outline-dark w-100">
-                <i class="bi bi-grid me-2"></i>View Items
-              </a>
-            </div>
-          </div>
-
-
         </div>
 
-
-      </div>
-
-  </div>
-  </section>
-
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div
-        class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-center text-md-start">
-        <p class="footer-text mb-0">© 2026 Admin Control Panel. All rights reserved.</p>
-        <p class="footer-text mb-0">Professional enterprise-grade dashboard interface.</p>
-      </div>
+        <!-- Marquee -->
+        <div class="admin-marquee">
+            <div class="marquee-track">
+                <span><i class="bi bi-megaphone"></i> Admin Notice: Keep product prices and stock updated regularly.</span>
+                <span><i class="bi bi-truck"></i> Track customer orders and update delivery status on time.</span>
+                <span><i class="bi bi-stars"></i> Maintain premium product listings for better customer experience.</span>
+                <span><i class="bi bi-shield-lock"></i> Secure admin access and avoid sharing credentials.</span>
+            </div>
+        </div>
     </div>
-  </footer>
+</section>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Stats Cards -->
+<section class="section-space">
+    <div class="container">
 
-</body>
+        <h3 class="section-title">Business Overview</h3>
+        <p class="section-subtitle">Corporate-level summary of your ecommerce administration.</p>
 
-</html>
+        <div class="row g-4 mb-5">
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stats-card">
+                    <div class="stats-top">
+                        <div class="stats-icon"><i class="bi bi-box-seam"></i></div>
+                        <div class="stats-growth">+12%</div>
+                    </div>
+                    <h3>Products</h3>
+                    <p>Manage active product listings</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stats-card">
+                    <div class="stats-top">
+                        <div class="stats-icon"><i class="bi bi-bag-check"></i></div>
+                        <div class="stats-growth">+18%</div>
+                    </div>
+                    <h3>Orders</h3>
+                    <p>Track customer purchases</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stats-card">
+                    <div class="stats-top">
+                        <div class="stats-icon"><i class="bi bi-people"></i></div>
+                        <div class="stats-growth">+9%</div>
+                    </div>
+                    <h3>Customers</h3>
+                    <p>Monitor user activity</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stats-card">
+                    <div class="stats-top">
+                        <div class="stats-icon"><i class="bi bi-currency-rupee"></i></div>
+                        <div class="stats-growth">+24%</div>
+                    </div>
+                    <h3>Revenue</h3>
+                    <p>Analyze sales performance</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner Carousel -->
+        <div class="banner-card mb-5">
+            <div id="adminDashboardCarousel" class="carousel slide" data-bs-ride="carousel">
+
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#adminDashboardCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#adminDashboardCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#adminDashboardCarousel" data-bs-slide-to="2"></button>
+                </div>
+
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active">
+                        <div class="carousel-content">
+                            <div class="carousel-badge">
+                                <i class="bi bi-graph-up-arrow"></i> Smart Ecommerce Control
+                            </div>
+                            <h2>Control your entire store from one powerful dashboard.</h2>
+                            <p>
+                                Manage products, orders, customers, reports, and business operations with a professional admin experience.
+                            </p>
+                            <a href="/admin/products" class="btn btn-light w-auto">
+                                Manage Inventory
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="carousel-content">
+                            <div class="carousel-badge">
+                                <i class="bi bi-lightning-charge"></i> Fast Operations
+                            </div>
+                            <h2>Update orders and product status quickly.</h2>
+                            <p>
+                                Keep your ecommerce workflow smooth with quick access to order management and product controls.
+                            </p>
+                            <a href="/admin/orders" class="btn btn-light w-auto">
+                                Check Orders
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="carousel-content">
+                            <div class="carousel-badge">
+                                <i class="bi bi-award"></i> Corporate Experience
+                            </div>
+                            <h2>Build a premium shopping platform with clean administration.</h2>
+                            <p>
+                                A professional interface helps you maintain trust, speed, and quality across your ecommerce project.
+                            </p>
+                            <a href="/admin/profile" class="btn btn-light w-auto">
+                                View Profile
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#adminDashboardCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#adminDashboardCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Main Admin Cards -->
+        <h3 class="section-title">Administration Modules</h3>
+        <p class="section-subtitle">Access important ecommerce management sections.</p>
+
+        <div class="row g-4 mb-5">
+
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="bi bi-plus-square"></i>
+                    </div>
+                    <h4>Add Products</h4>
+                    <p>Add new products with price, category, image, and stock information.</p>
+                    <a href="/admin/add-product" class="btn btn-primary">
+                        Add Product
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="bi bi-boxes"></i>
+                    </div>
+                    <h4>Manage Products</h4>
+                    <p>Edit, update, or remove existing products from your ecommerce store.</p>
+                    <a href="/admin/products" class="btn btn-primary">
+                        Manage Products
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="bi bi-receipt"></i>
+                    </div>
+                    <h4>Manage Orders</h4>
+                    <p>View customer orders, payment details, delivery status, and invoices.</p>
+                    <a href="/admin/orders" class="btn btn-primary">
+                        View Orders
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Quick Actions -->
+        <h3 class="section-title">Quick Actions</h3>
+        <p class="section-subtitle">Use shortcuts to handle common admin tasks faster.</p>
+
+        <div class="row g-4 mb-5">
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="/admin/categories" class="quick-card">
+                    <div class="quick-icon">
+                        <i class="bi bi-grid"></i>
+                    </div>
+                    <h5>Categories</h5>
+                    <p>Organize products into clean categories.</p>
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="/admin/users" class="quick-card">
+                    <div class="quick-icon">
+                        <i class="bi bi-person-lines-fill"></i>
+                    </div>
+                    <h5>Users</h5>
+                    <p>Check registered customer accounts.</p>
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="/admin/profile" class="quick-card">
+                    <div class="quick-icon">
+                        <i class="bi bi-person-gear"></i>
+                    </div>
+                    <h5>Admin Profile</h5>
+                    <p>Update your personal admin details.</p>
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="/admin/logout" class="quick-card">
+                    <div class="quick-icon">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </div>
+                    <h5>Logout</h5>
+                    <p>Securely exit the admin dashboard.</p>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Activity / Corporate Banner -->
+        <div class="row g-4 corporate-footer-space">
+
+            <div class="col-12 col-lg-7">
+                <div class="activity-card">
+                    <h4 class="section-title">Recent Admin Priorities</h4>
+                    <p class="section-subtitle">Recommended actions for a professional ecommerce workflow.</p>
+
+                    <ul class="activity-list">
+                        <li>
+                            <div class="activity-dot"></div>
+                            <div>
+                                <strong>Update product stock availability</strong>
+                                <span>Keep inventory accurate to avoid order issues.</span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="activity-dot"></div>
+                            <div>
+                                <strong>Review pending customer orders</strong>
+                                <span>Process new orders quickly for better customer satisfaction.</span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="activity-dot"></div>
+                            <div>
+                                <strong>Improve product images and descriptions</strong>
+                                <span>Professional listings increase customer trust.</span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="activity-dot"></div>
+                            <div>
+                                <strong>Monitor pricing and offers</strong>
+                                <span>Maintain competitive pricing across all categories.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-5">
+                <div class="activity-card">
+                    <h4 class="section-title">Store Performance</h4>
+                    <p class="section-subtitle">Premium ecommerce administration summary.</p>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <strong>Product Management</strong>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 85%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <strong>Order Processing</strong>
+                            <span>72%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" style="width: 72%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <strong>Customer Experience</strong>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" style="width: 90%;"></div>
+                        </div>
+                    </div>
+
+                    <a href="/admin/orders" class="btn btn-primary mt-2">
+                        Review Store Activity
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

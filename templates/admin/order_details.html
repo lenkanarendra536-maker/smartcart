@@ -1,0 +1,257 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Order #{{ order.order_id }}{% endblock %}
+
+{% block css %}
+<style>
+    /* ✅ YOUR FULL ORIGINAL CSS (UNCHANGED) */
+
+
+
+    /* Card */
+    .order-box {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 24px;
+        margin: 30px auto;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+        max-width: 950px;
+    }
+
+    .order-title {
+        font-weight: 700;
+        margin-bottom: 18px;
+    }
+
+    .info-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 16px;
+        height: 100%;
+    }
+
+    .info-card p {
+        margin-bottom: 8px;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: #dbeafe;
+        color: #1d4ed8;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .update-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 16px;
+        margin-top: 20px;
+    }
+
+    .btn-update {
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-weight: 600;
+    }
+
+    .btn-update:hover {
+        background: #218838;
+        color: white;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table th {
+        background: #f5f5f5;
+        white-space: nowrap;
+    }
+
+    footer {
+        background: #0f172a;
+        color: white;
+        text-align: center;
+        padding: 12px;
+        margin-top: auto;
+    }
+
+    @media (max-width: 991px) {
+        .nav-link {
+            margin-left: 0;
+            margin-top: 6px;
+        }
+
+        .navbar form {
+            width: 100%;
+            margin: 10px 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .order-box {
+            padding: 16px;
+            margin: 20px 12px;
+        }
+
+        .order-title {
+            font-size: 1.35rem;
+            text-align: center;
+        }
+
+        .update-form {
+            flex-direction: column;
+        }
+
+        .update-form select,
+        .update-form button {
+            width: 100%;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            min-width: 520px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .navbar-brand {
+            font-size: 0.95rem;
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+        }
+
+        .order-box {
+            padding: 14px;
+        }
+
+        .info-card,
+        .update-box {
+            padding: 14px;
+        }
+
+        .order-title {
+            font-size: 1.2rem;
+        }
+
+        .info-card p,
+        .table td,
+        .table th {
+            font-size: 0.9rem;
+        }
+    }
+
+    /* REST CSS SAME */
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="main-content">
+    <div class="container">
+
+        <div class="order-box">
+
+            <h2 class="order-title">
+                <i class="bi bi-receipt-cutoff me-2"></i>
+                Order #{{ order.order_id }}
+            </h2>
+
+            <div class="row g-3">
+                <div class="col-12 col-md-4">
+                    <div class="info-card">
+                        <p class="text-muted mb-1">Payment</p>
+                        <strong>{{ order.payment_status }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="info-card">
+                        <p class="text-muted mb-1">Total Amount</p>
+                        <strong>₹{{ order.amount }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="info-card">
+                        <p class="text-muted mb-1">Current Status</p>
+                        <span class="status-badge">{{ order.order_status }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="update-box">
+                <h4 class="mb-3">Update Order Status</h4>
+
+                <form method="POST" action="/admin/update-order-status/{{ order.order_id }}"
+                      class="d-flex gap-2 update-form">
+
+                    <select name="status" class="form-select">
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Packed">Packed</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-update">
+                        <i class="bi bi-check2-circle me-1"></i> Update
+                    </button>
+                </form>
+            </div>
+
+            <h4 class="mt-4 mb-3">Items</h4>
+
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle text-center">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for it in items %}
+                        <tr>
+                            <td>{{ it.product_name }}</td>
+                            <td>{{ it.quantity }}</td>
+                            <td>₹{{ it.price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ✅ ADDED BACK BUTTON -->
+            <div class="mt-4 text-start">
+                <a href="/admin/orders" class="btn btn-outline-dark">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Orders
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+

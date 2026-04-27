@@ -17,8 +17,8 @@ DB_NAME = "Smartcart_db"
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 587
 MAIL_USE_TLS = True
-MAIL_USERNAME = 'narendralenka553@gmail.com'
-MAIL_PASSWORD = 'krmn yijr ggxn hzuk'   # Gmail App Password
+MAIL_USERNAME = 'smartcart2k26@gmail.com'
+MAIL_PASSWORD = 'fixd nzgo zktc tqif'   # Gmail App Password
 
 RAZORPAY_KEY_ID = "rzp_test_SgserJ7uNLGmPg"
 RAZORPAY_KEY_SECRET = "3fH1NzJO0gw5mZlAkIimMPe4"

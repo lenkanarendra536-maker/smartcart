@@ -1,0 +1,182 @@
+{% extends "superadmin/base_superadmin.html" %}
+
+{% block content %}
+
+<style>
+    .orders-page {
+        padding: 30px 0;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #0f172a, #2563eb);
+        color: white;
+        padding: 26px;
+        border-radius: 18px;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+        margin-bottom: 25px;
+    }
+
+    .page-header h2 {
+        font-weight: 800;
+        margin: 0;
+    }
+
+    .table-card {
+        background: white;
+        padding: 20px;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+    }
+
+    .custom-table {
+        margin-bottom: 0;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .custom-table thead th {
+        background: #0f172a;
+        color: white;
+        padding: 15px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+
+    .custom-table tbody td {
+        padding: 15px;
+        font-size: 15px;
+    }
+
+    .custom-table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .order-id {
+        font-weight: 800;
+        color: #2563eb;
+    }
+
+    .amount-text {
+        font-weight: 800;
+        color: #15803d;
+    }
+
+    .payment-badge {
+        background: #e0f2fe;
+        color: #0369a1;
+        padding: 7px 13px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .status-badge {
+        padding: 7px 13px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .status-paid,
+    .status-delivered,
+    .status-success {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .status-failed,
+    .status-cancelled {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    @media (max-width: 768px) {
+        .orders-page {
+            padding: 18px 0;
+        }
+
+        .page-header {
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        .page-header h2 {
+            font-size: 22px;
+        }
+
+        .table-card {
+            padding: 12px;
+            border-radius: 14px;
+        }
+
+        .custom-table thead th,
+        .custom-table tbody td {
+            padding: 12px;
+            font-size: 13px;
+        }
+    }
+</style>
+
+<div class="orders-page">
+    <div class="container-fluid">
+
+        <div class="page-header">
+            <h2>🧾 All Orders</h2>
+            <p class="mb-0 mt-2">Monitor all customer orders across the platform.</p>
+        </div>
+
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-center custom-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>User ID</th>
+                            <th>Total Amount</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td class="order-id">#{{ order.order_id }}</td>
+                            <td>{{ order.user_id }}</td>
+                            <td class="amount-text">₹{{ order.amount }}</td>
+
+                            <td>
+                                <span class="payment-badge">
+                                    {{ order.payment_status }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {% if order.order_status == 'Delivered' or order.order_status == 'delivered' %}
+                                    <span class="status-badge status-delivered">{{ order.order_status }}</span>
+                                {% elif order.order_status == 'Cancelled' or order.order_status == 'cancelled' %}
+                                    <span class="status-badge status-cancelled">{{ order.order_status }}</span>
+                                {% else %}
+                                    <span class="status-badge status-pending">{{ order.order_status }}</span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ order.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

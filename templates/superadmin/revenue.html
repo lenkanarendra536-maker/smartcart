@@ -1,0 +1,159 @@
+{% extends "superadmin/base_superadmin.html" %}
+
+{% block content %}
+
+<style>
+    .revenue-page {
+        padding: 30px 0;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #0f172a, #16a34a);
+        color: white;
+        padding: 26px;
+        border-radius: 18px;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+        margin-bottom: 25px;
+    }
+
+    .page-header h2 {
+        margin: 0;
+        font-weight: 800;
+    }
+
+    .summary-card {
+        background: white;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .summary-card h4 {
+        color: #64748b;
+        margin-bottom: 10px;
+    }
+
+    .summary-card h2 {
+        color: #15803d;
+        font-weight: 800;
+        font-size: 32px;
+    }
+
+    .table-card {
+        background: white;
+        padding: 20px;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+    }
+
+    .custom-table {
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+
+    .custom-table thead th {
+        background: #0f172a;
+        color: white;
+        padding: 15px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+
+    .custom-table tbody td {
+        padding: 15px;
+        font-size: 15px;
+    }
+
+    .custom-table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .admin-name {
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .revenue-amount {
+        font-weight: 800;
+        color: #16a34a;
+    }
+
+    @media (max-width: 768px) {
+        .revenue-page {
+            padding: 18px 0;
+        }
+
+        .page-header {
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        .page-header h2 {
+            font-size: 22px;
+        }
+
+        .summary-card {
+            padding: 18px;
+        }
+
+        .summary-card h2 {
+            font-size: 26px;
+        }
+
+        .table-card {
+            padding: 12px;
+            border-radius: 14px;
+        }
+
+        .custom-table thead th,
+        .custom-table tbody td {
+            padding: 12px;
+            font-size: 13px;
+        }
+    }
+</style>
+
+<div class="revenue-page">
+    <div class="container-fluid">
+
+        <div class="page-header">
+            <h2>💰 Revenue Report</h2>
+            <p class="mb-0 mt-2">Overview of total earnings and admin-wise performance.</p>
+        </div>
+
+        <div class="summary-card">
+            <h4>Total Platform Revenue</h4>
+            <h2>₹{{ total_revenue }}</h2>
+        </div>
+
+        <div class="table-card">
+            <h5 class="mb-3 fw-bold">Revenue Per Admin</h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover text-center align-middle custom-table">
+                    <thead>
+                        <tr>
+                            <th>Admin Name</th>
+                            <th>Revenue</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in admin_revenue %}
+                        <tr>
+                            <td class="admin-name">{{ item.admin_name }}</td>
+                            <td class="revenue-amount">₹{{ item.revenue }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends "superadmin/base_superadmin.html" %}
+
+{% block content %}
+
+<style>
+    .products-page {
+        padding: 30px 0;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #0f172a, #1d4ed8);
+        color: white;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        margin-bottom: 25px;
+    }
+
+    .page-header h2 {
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .table-card {
+        background: white;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+        overflow: hidden;
+    }
+
+    .table-responsive {
+        border-radius: 14px;
+    }
+
+    .custom-table {
+        margin-bottom: 0;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .custom-table thead th {
+        background: #0f172a;
+        color: white;
+        padding: 14px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .custom-table tbody td {
+        padding: 14px;
+        font-size: 15px;
+    }
+
+    .custom-table tbody tr:hover {
+        background: #f1f5f9;
+    }
+
+    .product-img {
+        width: 72px;
+        height: 72px;
+        object-fit: cover;
+        border-radius: 14px;
+        border: 1px solid #e5e7eb;
+        background: #f8fafc;
+    }
+
+    .product-name {
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .category-badge {
+        background: #e0f2fe;
+        color: #0369a1;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .price-text {
+        font-weight: 700;
+        color: #15803d;
+    }
+
+    .admin-badge {
+        background: #ede9fe;
+        color: #5b21b6;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .products-page {
+            padding: 18px 0;
+        }
+
+        .page-header {
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        .page-header h2 {
+            font-size: 22px;
+        }
+
+        .table-card {
+            padding: 12px;
+            border-radius: 14px;
+        }
+
+        .custom-table thead th,
+        .custom-table tbody td {
+            padding: 12px;
+            font-size: 13px;
+        }
+
+        .product-img {
+            width: 58px;
+            height: 58px;
+        }
+    }
+</style>
+
+<div class="products-page">
+    <div class="container-fluid">
+
+        <div class="page-header">
+            <h2>📦 All Products</h2>
+            <p class="mb-0 mt-2">Monitor all products added by admins across the platform.</p>
+        </div>
+
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-center custom-table">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Admin</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>#{{ product.product_id }}</td>
+
+                            <td>
+                                {% if product.image %}
+                                <img src="{{ url_for('static', filename='uploads/product_images/' ~ product.image) }}"
+                                     class="product-img"
+                                     alt="{{ product.name }}">
+                                {% else %}
+                                <span class="text-muted">No Image</span>
+                                {% endif %}
+                            </td>
+
+                            <td class="product-name">{{ product.name }}</td>
+                            <td><span class="category-badge">{{ product.category }}</span></td>
+                            <td class="price-text">₹{{ product.price }}</td>
+                            <td>
+                                <span class="admin-badge">
+                                    {{ product.admin_name if product.admin_name else 'Not Assigned' }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

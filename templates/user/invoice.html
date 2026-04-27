@@ -46,6 +46,12 @@
             margin-top: 15px;
             background: #f9f9f9;
         }
+
+        .address-box h3 {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
     </style>
 </head>
 
@@ -62,12 +68,10 @@
         <h3>Customer Details</h3>
         <p><strong>User ID:</strong> {{ order.user_id }}</p>
 
-        <!-- ✅ SHIPPING ADDRESS ADDED -->
-
+        <!-- ✅ FIXED SHIPPING ADDRESS -->
         <div class="address-box">
-            <p style="margin:0 0 10px 0; font-weight:bold; font-size:18px;">
-                <h3>Shipping Address:</h3>
-            </p>
+
+            <h3>Shipping Address</h3>
 
             <p style="margin:0;">
                 <strong>{{ order.full_name }}</strong><br>
@@ -77,6 +81,7 @@
                 {{ order.city }}, {{ order.state }} - {{ order.pincode }}<br>
                 {{ order.country }}
             </p>
+
         </div>
 
         <h3>Items</h3>

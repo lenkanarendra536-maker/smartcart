@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Smart Cart{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 25%),
+                linear-gradient(135deg, #f8fafc, #eef2ff, #f8fafc);
+            color: var(--text-dark);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .navbar {
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 24px rgba(2, 6, 23, 0.22);
+            padding: 14px 0;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff !important;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.15rem;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+            flex-shrink: 0;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.86) !important;
+            font-weight: 500;
+            margin-left: 10px;
+            padding: 10px 14px !important;
+            border-radius: 10px;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #fff !important;
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        .login-link:hover {
+            background: rgba(37, 99, 235, 0.18) !important;
+            color: #dbeafe !important;
+        }
+
+        .logout-link:hover {
+            background: rgba(239, 68, 68, 0.14) !important;
+            color: #fecaca !important;
+        }
+
+        .cart-nav-link {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-icon-box {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+        }
+
+        .cart-icon-box i {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: red;
+            color: white;
+            font-size: 10px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .flash-wrapper {
+            padding-top: 20px;
+        }
+
+        .alert {
+            border: none;
+            border-radius: 16px;
+            padding: 14px 18px;
+            font-weight: 500;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .footer {
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(10px);
+            color: #cbd5e1;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer h5 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-brand {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #cbd5e1;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #0d6efd;
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 18px;
+            color: #cbd5e1;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #0d6efd;
+            transform: translateY(-3px);
+        }
+
+        .footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+            margin: 25px 0;
+        }
+
+        .footer-bottom {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 991px) {
+            .navbar-nav .nav-link {
+                margin-left: 0;
+                margin-top: 6px;
+                text-align: center;
+            }
+
+            .navbar-collapse.show,
+            .navbar-collapse {
+                padding-top: 12px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
+            .brand-logo {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+
+    {% if session.get('user_id') and not hide_user_nav %}
+
+    <!-- AFTER LOGIN NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+
+            <a class="navbar-brand" href="/user-dashboard">
+                <span class="brand-logo"><i class="bi bi-cart3"></i></span>
+                <span>Smart Cart</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="userNav">
+                <ul class="navbar-nav ms-auto text-center text-lg-start align-items-lg-center">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user-dashboard">
+                            <i class="bi bi-house-door me-1"></i> Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/products">
+                            <i class="bi bi-bag me-1"></i> Shop
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/my-orders">
+                            <i class="bi bi-box-seam me-1"></i> Orders
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/profile">
+                            <i class="bi bi-person-circle me-1"></i>
+                            Hi, {{ session.get('user_name', 'Profile') }}
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link cart-nav-link" href="/user/cart">
+                            <span class="cart-icon-box">
+                                <i class="bi bi-cart3"></i>
+                                <span class="cart-badge">{{ cart_count if cart_count else 0 }}</span>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link logout-link" href="/user-logout">
+                            <i class="bi bi-box-arrow-right me-1"></i> Logout
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    {% else %}
+
+    <!-- BEFORE LOGIN NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+
+            <a class="navbar-brand" href="/user-login">
+                <span class="brand-logo"><i class="bi bi-cart3"></i></span>
+                <span>Smart Cart</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#guestNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="guestNav">
+                <ul class="navbar-nav ms-auto text-center text-lg-start align-items-lg-center">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user-login">
+                            <i class="bi bi-house-door me-1"></i> Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user-about">
+                            <i class="bi bi-info-circle me-1"></i> About
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user-contact">
+                            <i class="bi bi-envelope me-1"></i> Contact
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link login-link" href="/user-login">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    {% endif %}
+
+    <div class="main-content">
+
+        <div class="container flash-wrapper">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        {% block content %}{% endblock %}
+
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+
+            <div class="row gy-4">
+
+                <div class="col-md-4">
+                    <h4 class="footer-brand">
+                        <i class="bi bi-cart3"></i> Smart Cart
+                    </h4>
+                    <p class="footer-text">
+                        Your one-stop shop for electronics, fashion, and more.
+                        Quality products, best prices, and fast delivery 🚀
+                    </p>
+                </div>
+
+                <div class="col-md-2">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/user/products">Shop</a></li>
+                        <li><a href="/user/my-orders">Orders</a></li>
+                        <li><a href="/user/cart">Cart</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3">
+                    <h5>Categories</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Electronics</a></li>
+                        <li><a href="#">Fashion</a></li>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Gadgets</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3">
+                    <h5>Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="text-center footer-bottom">
+                © 2026 SmartCart. Designed and Built by Narendra Lenka. All Rights Reserved
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        setTimeout(function () {
+            let alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function (alert) {
+                let bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 3000);
+    </script>
+
+    {% block js %}{% endblock %}
+
+</body>
+
+</html>

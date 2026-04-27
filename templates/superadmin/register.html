@@ -1,0 +1,199 @@
+{% extends "superadmin/base_superadmin.html" %}
+
+{% block title %}Super Admin Register{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #0f172a;
+        --accent: #040b1c;
+        --accent-hover: #1d4ed8;
+        --text-muted: #64748b;
+    }
+
+
+    .register-wrapper {
+        min-height: calc(100vh - 190px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 35px 15px;
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 480px;
+        background: rgba(255, 255, 255, 0.96);
+        padding: clamp(24px, 4vw, 38px);
+        border-radius: 24px;
+        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.14);
+        border: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .icon-box {
+        width: clamp(60px, 10vw, 76px);
+        height: clamp(60px, 10vw, 76px);
+        background: linear-gradient(135deg, #dbeafe, #eff6ff);
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: clamp(28px, 5vw, 34px);
+        margin: 0 auto 18px;
+    }
+
+    .register-card h2 {
+        text-align: center;
+        font-weight: 800;
+        margin-bottom: 8px;
+        color: var(--accent);
+        font-size: clamp(1.6rem, 4vw, 2.15rem);
+    }
+
+    .register-subtitle {
+        text-align: center;
+        color: #64748b;
+        margin-bottom: 28px;
+        font-size: clamp(0.88rem, 2vw, 0.95rem);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        border-radius: 14px;
+        padding: 12px 15px;
+        min-height: 50px;
+        border: 1px solid #dbe3ef;
+        background: #f8fafc;
+        font-size: 0.95rem;
+    }
+
+    .form-control:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        background: #fff;
+    }
+
+    .btn-register {
+        width: 100%;
+        border-radius: 14px;
+        padding: 13px;
+        font-weight: 700;
+        font-size: 1rem;
+        background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+        border: none;
+        box-shadow: 0 10px 22px rgba(37, 99, 235, 0.28);
+    }
+
+    .btn-register:hover {
+        background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    }
+
+    .auth-text {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: 0;
+    }
+
+    .auth-text a {
+        color: var(--accent);
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .auth-text a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 575px) {
+        .register-wrapper {
+            min-height: calc(100vh - 160px);
+            padding: 25px 14px;
+            align-items: flex-start;
+        }
+
+        .register-card {
+            max-width: 100%;
+            border-radius: 20px;
+            margin-top: 15px;
+        }
+
+        .form-control {
+            min-height: 48px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .register-card {
+            padding: 22px 18px;
+        }
+
+        .register-card h2 {
+            font-size: 1.45rem;
+        }
+
+        .register-subtitle,
+        .auth-text {
+            font-size: 0.86rem;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .register-card {
+            max-width: 500px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="register-wrapper">
+    <div class="register-card">
+
+        <div class="icon-box">
+            <i class="bi bi-person-fill-lock"></i>
+        </div>
+
+        <h2>Super Admin Register</h2>
+        <p class="register-subtitle">Create your owner-level SmartCart account</p>
+
+        <form method="POST" action="/superadmin-register">
+
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Enter full name" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-register">
+                <i class="bi bi-person-plus-fill me-1"></i> Register
+            </button>
+
+            <div class="mt-4 text-center">
+                <p class="auth-text">
+                    Already have an account?
+                    <a href="/superadmin-login" class="text-decoration-none">Login</a>
+                </p>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

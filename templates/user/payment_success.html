@@ -1,283 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "user/base_user.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Successful</title>
+{% block title %}Payment Successful{% endblock %}
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+{% block css %}
+<style>
+    .success-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
 
-    <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    .success-icon {
+        font-size: 60px;
+        color: #22c55e;
+    }
 
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #eef2f7, #dbeafe);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+    .success-title {
+        font-size: 28px;
+        font-weight: bold;
+        color: #16a34a;
+        margin-top: 10px;
+    }
 
-        .main-content {
-            flex: 1;
-        }
+    .details-box {
+        background: #f8fafc;
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 20px;
+        text-align: left;
+    }
 
-        /* ===== NEW NAVBAR CSS ===== */
+    .center-box {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{% endblock %}
 
-        .navbar {
-            background: rgba(15, 23, 42, 0.94);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 24px rgba(2, 6, 23, 0.22);
-            padding: 14px 0;
-        }
+{% block content %}
 
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #fff !important;
-        }
+<div class="container center-box">
 
-        .brand-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #2563eb, #1e40af);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
-        }
+    <div class="col-12 col-md-6 col-lg-5">
+        <div class="success-card">
 
-        .navbar-nav .nav-link {
-            color: rgba(255, 255, 255, 0.86) !important;
-            font-weight: 500;
-            margin-left: 10px;
-            padding: 10px 14px !important;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
-            color: #fff !important;
-            background: rgba(255, 255, 255, 0.10);
-        }
-
-        .logout-link:hover {
-            background: rgba(220, 38, 38, 0.18) !important;
-            color: #fecaca !important;
-        }
-
-
-
-        .cart-nav-link {
-            display: inline-flex !important;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 12px !important;
-        }
-
-        .cart-icon-box {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-        }
-
-        .cart-icon-box i {
-            font-size: 24px;
-            line-height: 1;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -10px;
-            background: red;
-            color: white;
-            font-size: 10px;
-            min-width: 18px;
-            height: 18px;
-            padding: 0 5px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        @media(max-width:991px) {
-            .navbar-nav .nav-link {
-                margin-left: 0;
-                margin-top: 6px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .cart-badge {
-                top: -8px;
-                right: -10px;
-            }
-        }
-
-        @media (max-width: 575px) {
-            .navbar-brand {
-                font-size: 1rem;
-            }
-
-            .brand-logo {
-                width: 38px;
-                height: 38px;
-                font-size: 1rem;
-            }
-        }
-
-        /* ===== ORIGINAL CSS ===== */
-
-        .success-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .success-icon {
-            font-size: 60px;
-            color: #22c55e;
-        }
-
-        .success-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #16a34a;
-            margin-top: 10px;
-        }
-
-        .details-box {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .center-box {
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        footer {
-            background: #0f172a;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-    </style>
-</head>
-
-<body>
-
-<!-- ===== NEW NAVBAR ===== -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-    <div class="container">
-
-        <a class="navbar-brand" href="/user-dashboard">
-            <span class="brand-logo"><i class="bi bi-cart3"></i></span>
-            <span>Smart Cart</span>
-        </a>
-
-        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse mt-3 mt-lg-0" id="nav">
-
-
-            <ul class="navbar-nav ms-auto text-center text-lg-start align-items-lg-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="/user-dashboard"><i class="bi bi-house-door"></i> Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/products"><i class="bi bi-bag"></i> Shop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/my-orders"><i class="bi bi-box-seam"></i> Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/profile">
-                        <i class="bi bi-person-circle"></i> Hi, {{ session.get('user_name','Profile') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link cart-nav-link" href="/user/cart">
-                        <span class="cart-icon-box">
-                            <i class="bi bi-cart3"></i>
-                            <span class="cart-badge">{{ cart_count if cart_count else 0 }}</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link logout-link" href="/user-logout">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-</nav>
-
-<!-- MAIN -->
-<div class="main-content">
-    <div class="container center-box">
-
-        <div class="col-12 col-md-6 col-lg-5">
-            <div class="success-card">
-
-                <div class="success-icon">
-                    <i class="bi bi-check-circle-fill"></i>
-                </div>
-
-                <div class="success-title">Payment Successful!</div>
-
-                <p class="text-muted mt-2">Your order has been placed successfully.</p>
-
-                <div class="details-box mt-3">
-                    <p><strong>Payment ID:</strong> {{ payment_id }}</p>
-                    <p><strong>Order ID:</strong> {{ order_id }}</p>
-                </div>
-
-                <a href="/user/products" class="btn btn-primary mt-4 w-100">
-                    Continue Shopping
-                </a>
-
+            <div class="success-icon">
+                <i class="bi bi-check-circle-fill"></i>
             </div>
-        </div>
 
+            <div class="success-title">Payment Successful!</div>
+
+            <p class="text-muted mt-2">
+                Your order has been placed successfully.
+            </p>
+
+            <div class="details-box mt-3">
+                <p><strong>Payment ID:</strong> {{ payment_id }}</p>
+                <p><strong>Order ID:</strong> {{ order_id }}</p>
+            </div>
+
+            <a href="/user/products" class="btn btn-primary mt-4 w-100">
+                Continue Shopping
+            </a>
+
+        </div>
     </div>
+
 </div>
 
-<footer>
-    © 2026 SmartCart • Payment Success
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+{% endblock %}

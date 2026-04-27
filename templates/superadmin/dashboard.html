@@ -1,0 +1,152 @@
+{% extends "superadmin/base_superadmin.html" %}
+
+{% block content %}
+
+<style>
+    .dashboard-page {
+        padding: 30px 0;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #0f172a, #1d4ed8);
+        color: white;
+        padding: 28px;
+        border-radius: 18px;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+        margin-bottom: 25px;
+    }
+
+    .page-header h2 {
+        margin: 0;
+        font-weight: 800;
+    }
+
+    .stat-card {
+        border-radius: 20px;
+        padding: 22px;
+        color: white;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-icon {
+        font-size: 30px;
+        margin-bottom: 10px;
+        opacity: 0.9;
+    }
+
+    .stat-title {
+        font-size: 14px;
+        opacity: 0.9;
+        margin-bottom: 5px;
+    }
+
+    .stat-value {
+        font-size: 26px;
+        font-weight: 800;
+    }
+
+    /* Color Variants */
+    .bg-revenue {
+        background: linear-gradient(135deg, #16a34a, #22c55e);
+    }
+
+    .bg-admins {
+        background: linear-gradient(135deg, #2563eb, #3b82f6);
+    }
+
+    .bg-products {
+        background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    }
+
+    .bg-orders {
+        background: linear-gradient(135deg, #ef4444, #f87171);
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-page {
+            padding: 18px 0;
+        }
+
+        .page-header {
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        .page-header h2 {
+            font-size: 22px;
+        }
+
+        .stat-card {
+            padding: 18px;
+        }
+
+        .stat-value {
+            font-size: 22px;
+        }
+    }
+</style>
+
+<div class="dashboard-page">
+    <div class="container-fluid">
+
+        <!-- Header -->
+        <div class="page-header">
+            <h2>👑 Super Admin Dashboard</h2>
+            <p class="mb-0 mt-2">Overview of platform performance and activity.</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="row g-4">
+
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <a href="/superadmin/revenue" class="text-decoration-none">
+                    <div class="stat-card bg-revenue">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-title">Total Revenue</div>
+                        <div class="stat-value">₹{{ total_revenue }}</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <a href="/superadmin/admins" class="text-decoration-none">
+                    <div class="stat-card bg-admins">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-title">Total Admins</div>
+                        <div class="stat-value">{{ total_admins }}</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <a href="/superadmin/products" class="text-decoration-none">
+                    <div class="stat-card bg-products">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-title">Total Products</div>
+                        <div class="stat-value">{{ total_products }}</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <a href="/superadmin/orders" class="text-decoration-none">
+                    <div class="stat-card bg-orders">
+                        <div class="stat-icon">🧾</div>
+                        <div class="stat-title">Total Orders</div>
+                        <div class="stat-value">{{ total_orders }}</div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

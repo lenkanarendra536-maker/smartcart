@@ -1,0 +1,182 @@
+{% extends "superadmin/base_superadmin.html" %}
+
+{% block title %}Super Admin Login{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #0f172a;
+        --accent: #040b1c;
+        --accent-hover: #1d4ed8;
+        --text-muted: #64748b;
+    }
+
+
+
+    .login-wrapper {
+        min-height: calc(100vh - 190px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 35px 15px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 430px;
+        background: #fff;
+        padding: clamp(24px, 4vw, 38px);
+        border-radius: 22px;
+        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.14);
+    }
+
+    .icon-box {
+        width: clamp(58px, 10vw, 72px);
+        height: clamp(58px, 10vw, 72px);
+        background: #e7f1ff;
+        color: #0d6efd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: clamp(26px, 5vw, 34px);
+        margin: 0 auto 18px;
+    }
+
+    .login-card h2 {
+        text-align: center;
+        font-weight: 800;
+        font-size: clamp(1.55rem, 4vw, 2.15rem);
+        margin-bottom: 26px;
+        color: var(--accent)
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        border-radius: 13px;
+        padding: 12px 14px;
+        min-height: 50px;
+        font-size: 0.98rem;
+    }
+
+    .form-control:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.16);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+        border: none;
+        border-radius: 12px;
+        padding: 12px;
+        font-weight: 600;
+    }
+
+
+    .auth-text {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: 0;
+    }
+
+    .auth-text a,
+    .auth-link {
+        color: var(--accent);
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .auth-text a:hover,
+    .auth-link:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 575px) {
+        .login-wrapper {
+            min-height: calc(100vh - 160px);
+            padding: 25px 14px;
+            align-items: flex-start;
+        }
+
+        .login-card {
+            max-width: 100%;
+            border-radius: 18px;
+            margin-top: 20px;
+        }
+
+        .form-control {
+            min-height: 48px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .login-card {
+            padding: 22px 18px;
+        }
+
+        .login-card h2 {
+            font-size: 1.45rem;
+        }
+
+        .auth-text {
+            font-size: 0.88rem;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .login-card {
+            max-width: 450px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <div class="icon-box">
+            <i class="bi bi-shield-lock-fill"></i>
+        </div>
+
+        <h2>Super Admin Login</h2>
+
+        <form method="POST" action="/superadmin-login">
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" placeholder="Enter super admin email" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-box-arrow-in-right"></i> Login
+            </button>
+
+            <div class="auth-text mt-3 text-center">
+                <a href="/sa-forgot-password" class="auth-link text-decoration-none">Forgot Password</a>
+            </div>
+
+            <div class="mt-3 text-center">
+                <p class="auth-text">
+                    Don't have an account?
+                    <a href="/superadmin-register" class="text-decoration-none">Register</a>
+                </p>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
