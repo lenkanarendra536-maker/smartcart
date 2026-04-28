@@ -47,13 +47,7 @@
         font-size: 0.85rem;
     }
 
-    footer {
-        background: #0f172a;
-        color: white;
-        text-align: center;
-        padding: 12px;
-        margin-top: auto;
-    }
+
 
     @media (max-width: 991px) {
         .nav-link {
@@ -155,7 +149,7 @@
                                 </span>
                             </td>
 
-                            <td>{{ order.created_at }}</td>
+                            <td>{{ order.created_at_ist }}</td>
 
                             <td>
                                 <a class="view-btn" href="/admin/order/{{ order.order_id }}">

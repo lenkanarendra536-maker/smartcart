@@ -112,73 +112,120 @@
             transition: opacity 0.5s ease-out;
         }
 
-        .footer {
-            background: rgba(15, 23, 42, 0.94);
-            backdrop-filter: blur(10px);
+        .superadmin-footer {
+            background: #111827;
             color: #cbd5e1;
-            padding: 50px 0 20px;
-            margin-top: 60px;
+            padding: 45px 0 18px;
+            margin-top: 50px;
+            box-shadow: 0 -12px 35px rgba(15, 23, 42, 0.18);
         }
 
-        .footer h5 {
-            color: #fff;
-            margin-bottom: 15px;
-            font-weight: 600;
+        .superadmin-footer .footer-brand {
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.45rem;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .footer-brand {
-            color: #fff;
-            font-weight: bold;
+        .superadmin-footer .footer-brand i {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        .superadmin-footer h5 {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .superadmin-footer .footer-text {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        .superadmin-footer .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .superadmin-footer .footer-links li {
             margin-bottom: 10px;
         }
 
-        .footer-text {
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .footer-links {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-links li {
-            margin-bottom: 8px;
-        }
-
-        .footer-links a {
+        .superadmin-footer .footer-links a {
             text-decoration: none;
-            color: #cbd5e1;
-            font-size: 14px;
-            transition: 0.3s;
+            color: #94a3b8;
+            font-size: 0.94rem;
+            transition: 0.25s ease;
         }
 
-        .footer-links a:hover {
-            color: #0d6efd;
-            padding-left: 5px;
+        .superadmin-footer .footer-links a:hover {
+            color: #60a5fa;
+            padding-left: 4px;
         }
 
-        .social-icons a {
-            display: inline-block;
-            margin-right: 10px;
-            font-size: 18px;
-            color: #cbd5e1;
-            transition: 0.3s;
+        .superadmin-footer .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 14px;
         }
 
-        .social-icons a:hover {
-            color: #0d6efd;
+        .superadmin-footer .social-icons a {
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #dbeafe;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.25s ease;
+        }
+
+        .superadmin-footer .social-icons a:hover {
+            background: #2563eb;
+            color: #ffffff;
             transform: translateY(-3px);
         }
 
-        .footer hr {
-            border-color: rgba(255, 255, 255, 0.1);
-            margin: 25px 0;
+        .superadmin-footer hr {
+            border-color: rgba(255, 255, 255, 0.12);
+            margin: 30px 0 18px;
         }
 
-        .footer-bottom {
-            font-size: 14px;
+        .superadmin-footer .footer-bottom {
             color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 767px) {
+            .superadmin-footer {
+                text-align: center;
+                padding: 35px 0 18px;
+            }
+
+            .superadmin-footer .footer-brand {
+                justify-content: center;
+            }
+
+            .superadmin-footer .social-icons {
+                justify-content: center;
+            }
         }
 
 
@@ -315,7 +362,7 @@
 
     </div>
 
-    <footer class="footer">
+    <footer class="superadmin-footer">
         <div class="container">
 
             <div class="row gy-4">
@@ -325,38 +372,41 @@
                         <i class="bi bi-cart3"></i> Smart Cart
                     </h4>
                     <p class="footer-text">
-                        Your one-stop shop for electronics, fashion, and more.
-                        Quality products, best prices, and fast delivery 🚀
+                        SuperAdmin control center for managing admins, products,
+                        orders, revenue, and overall platform operations.
                     </p>
                 </div>
 
                 <div class="col-md-2">
-                    <h5>Quick Links</h5>
+                    <h5>SuperAdmin</h5>
                     <ul class="footer-links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/user/products">Shop</a></li>
-                        <li><a href="/user/my-orders">Orders</a></li>
-                        <li><a href="/user/cart">Cart</a></li>
+                        <li><a href="/superadmin/dashboard">Dashboard</a></li>
+                        <li><a href="/superadmin/admins">Admins</a></li>
+                        <li><a href="/superadmin/products">Products</a></li>
+                        <li><a href="/superadmin/orders">Orders</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-3">
-                    <h5>Categories</h5>
+                    <h5>Management</h5>
                     <ul class="footer-links">
-                        <li><a href="#">Electronics</a></li>
-                        <li><a href="#">Fashion</a></li>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Gadgets</a></li>
+                        <li><a href="/superadmin/revenue">Revenue</a></li>
+                        <li><a href="/superadmin/admins">Admin Approvals</a></li>
+                        <li><a href="/superadmin/products">Product Monitoring</a></li>
+                        <li><a href="/superadmin/orders">Order Tracking</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-3">
-                    <h5>Follow Us</h5>
+                    <h5>System</h5>
+                    <p class="footer-text mb-2">
+                        Secure platform monitoring and administrative control.
+                    </p>
                     <div class="social-icons">
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
-                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <a href="#"><i class="bi bi-shield-check"></i></a>
+                        <a href="#"><i class="bi bi-people"></i></a>
+                        <a href="#"><i class="bi bi-box-seam"></i></a>
+                        <a href="#"><i class="bi bi-graph-up-arrow"></i></a>
                     </div>
                 </div>
 
@@ -365,7 +415,7 @@
             <hr>
 
             <div class="text-center footer-bottom">
-                © 2026 SmartCart. Designed and Built by Narendra Lenka. All Rights Reserved
+                © 2026 SmartCart SuperAdmin Panel. Designed and Built by Narendra Lenka. All Rights Reserved.
             </div>
 
         </div>

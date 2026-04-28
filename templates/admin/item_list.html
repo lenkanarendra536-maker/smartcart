@@ -233,12 +233,13 @@
     }
 
     .product-image {
-        width: 72px;
-        height: 72px;
-        object-fit: cover;
-        border-radius: 16px;
+        width: 80px;
+        height: 80px;
+        object-fit: contain;   /* ✅ important */
+        border-radius: 12px;
         border: 1px solid #e2e8f0;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+        padding: 5px;
+        background: white;
     }
 
     .product-name {
@@ -459,7 +460,7 @@
                                     </td>
 
                                     <td>
-                                        <img src="/static/uploads/product_images/{{ product.image }}"
+                                        <img src="{{ url_for('static', filename='uploads/product_images/' ~ product.image) }}"
                                             alt="{{ product.name }}" class="product-image">
                                     </td>
 

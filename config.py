@@ -11,7 +11,7 @@ SECRET_KEY = "hello@123"   # used for sessions
 DB_HOST = "localhost"
 DB_USER = "root"
 DB_PASSWORD = "171004"  # keep empty if no password
-DB_NAME = "Smartcart_db"
+DB_NAME = "Smartcart_db"        
 
 # Email SMTP Settings
 MAIL_SERVER = 'smtp.gmail.com'

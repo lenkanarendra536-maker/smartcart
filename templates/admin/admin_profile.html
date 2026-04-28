@@ -49,7 +49,7 @@
         flex-direction: column;
     }
 
-   
+
     /* Header */
     .page-header {
         padding: 40px 0 20px;
@@ -428,6 +428,33 @@
         }
     }
 
+    .custom-file-upload {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border: 1px solid #dbe2ea;
+        border-radius: 14px;
+        padding: 10px 14px;
+        background: #fff;
+        min-height: 52px;
+    }
+
+    .upload-btn {
+        background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .file-name {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        word-break: break-word;
+    }
+
     /* REST CSS SAME — NOT CHANGED */
 </style>
 {% endblock %}
@@ -527,8 +554,16 @@
                                             <h6 class="fw-bold mb-2">Choose a New Profile Image</h6>
                                             <p class="text-muted mb-3">Upload a professional image for your admin
                                                 account.</p>
-                                            <input type="file" name="profile_image" class="form-control"
-                                                accept="image/*">
+                                            <div class="custom-file-upload">
+                                                <input type="file" name="profile_image" id="profileImageInput" hidden
+                                                    accept="image/*">
+
+                                                <label for="profileImageInput" class="upload-btn">
+                                                    <i class="bi bi-cloud-arrow-up me-1"></i> Choose Image
+                                                </label>
+
+                                                <span id="profileFileName" class="file-name">No file chosen</span>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -558,5 +593,12 @@
     </section>
 
 </div>
-
+{% block js %}
+<script>
+    document.getElementById("profileImageInput").addEventListener("change", function () {
+        document.getElementById("profileFileName").textContent =
+            this.files[0] ? this.files[0].name : "No file chosen";
+    });
+</script>
+{% endblock %}
 {% endblock %}

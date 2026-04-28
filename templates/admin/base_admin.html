@@ -53,6 +53,10 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 8px 24px rgba(2, 6, 23, 0.22);
             padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            /* 🔥 important */
         }
 
         .navbar-brand {
@@ -112,12 +116,25 @@
             color: #dbeafe !important;
         }
 
-        .alert {
-            border: none;
-            border-radius: 16px;
-            padding: 14px 18px;
-            font-weight: 500;
-            transition: opacity 0.5s ease-out;
+        /* ===== FLASH MESSAGE COLORS (ADDED ONLY) ===== */
+        .alert-success {
+            background-color: #d1e7dd !important;
+            color: #0f5132 !important;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da !important;
+            color: #842029 !important;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd !important;
+            color: #664d03 !important;
+        }
+
+        .alert-info {
+            background-color: #cff4fc !important;
+            color: #055160 !important;
         }
 
         .footer {
@@ -221,7 +238,7 @@
     {% if session.get('admin_id') and not hide_admin_nav %}
 
     <!-- AFTER ADMIN LOGIN NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
 
             <a class="navbar-brand" href="/admin-dashboard">
@@ -261,7 +278,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/profile">
-                            <i class="bi bi-person-circle me-1"></i> Profile
+                            <i class="bi bi-person-circle me-1"></i> Hi, {{ session.get('admin_name', 'Profile') }}
                         </a>
                     </li>
 
@@ -351,11 +368,10 @@
                 <!-- Brand -->
                 <div class="col-md-4">
                     <h4 class="footer-brand">
-                        <i class="bi bi-cart3"></i> Smart Cart
+                        <i class="bi bi-cart3"></i> Smart Cart Admin
                     </h4>
                     <p class="footer-text">
-                        Your one-stop shop for electronics, fashion, and more.
-                        Quality products, best prices, and fast delivery 🚀
+                        Manage your store efficiently. Track products, orders, and performance in one place 🚀
                     </p>
                 </div>
 
@@ -363,21 +379,21 @@
                 <div class="col-md-2">
                     <h5>Quick Links</h5>
                     <ul class="footer-links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/user/products">Shop</a></li>
-                        <li><a href="/user/orders">Orders</a></li>
-                        <li><a href="/user/cart">Cart</a></li>
+                        <li><a href="/admin-dashboard">Dashboard</a></li>
+                        <li><a href="/admin/item-list">Products</a></li>
+                        <li><a href="/admin/orders">Orders</a></li>
+                        <li><a href="/admin/profile">Profile</a></li>
                     </ul>
                 </div>
 
-                <!-- Categories -->
+                <!-- Management -->
                 <div class="col-md-3">
-                    <h5>Categories</h5>
+                    <h5>Management</h5>
                     <ul class="footer-links">
-                        <li><a href="#">Electronics</a></li>
-                        <li><a href="#">Fashion</a></li>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Gadgets</a></li>
+                        <li><a href="/admin/add-item">Add Product</a></li>
+                        <li><a href="/admin/item-list">Manage Products</a></li>
+                        <li><a href="/admin/orders">Manage Orders</a></li>
+                        <li><a href="/admin/logout">Logout</a></li>
                     </ul>
                 </div>
 
@@ -397,7 +413,7 @@
             <hr>
 
             <div class="text-center footer-bottom">
-                © 2026 SmartCart | Designed with ❤️
+                © 2026 SmartCart © 2026 SmartCart. Designed and Built by Narendra Lenka. All Rights Reserved
             </div>
 
         </div>
