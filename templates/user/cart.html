@@ -68,6 +68,16 @@
         min-width: 260px;
     }
 
+    .btn-outline-primary {
+        border-radius: 8px;
+        font-size: 0.85rem;
+    }
+
+    .btn-outline-danger {
+        border-radius: 8px;
+        font-size: 0.85rem;
+    }
+
     @media (max-width: 768px) {
         .table-responsive {
             overflow-x: auto;
@@ -149,15 +159,13 @@
                         <tr>
                             <td>
                                 <input class="form-check-input product-checkbox" type="checkbox"
-                                    name="selected_products" value="{{ item.product_id }}"
-                                    data-price="{{ item.price }}"
-                                    data-quantity="{{ item.quantity }}"
-                                    {% if selected_products and item.product_id|string in selected_products %}checked{% endif %}>
+                                    name="selected_products" value="{{ item.product_id }}" data-price="{{ item.price }}"
+                                    data-quantity="{{ item.quantity }}" {% if selected_products and
+                                    item.product_id|string in selected_products %}checked{% endif %}>
                             </td>
 
                             <td>
-                                <img src="/static/uploads/product_images/{{ item.image }}"
-                                     class="cart-img">
+                                <img src="/static/uploads/product_images/{{ item.image }}" class="cart-img">
                             </td>
 
                             <td>{{ item.name }}</td>
@@ -174,9 +182,21 @@
                             <td>₹{{ item.total }}</td>
 
                             <td>
-                                <a href="/user/cart/remove/{{ item.product_id }}" class="remove-btn">
-                                    <i class="bi bi-trash"></i> Remove
-                                </a>
+                                <div class="d-flex justify-content-center gap-2 flex-wrap">
+
+                                    <!-- View Details -->
+                                    <a href="/user/product/{{ item.product_id }}"
+                                        class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+
+                                    <!-- Remove -->
+                                    <a href="/user/cart/remove/{{ item.product_id }}"
+                                        class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </a>
+
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
